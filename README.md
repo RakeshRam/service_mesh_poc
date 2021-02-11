@@ -1,6 +1,6 @@
-# Flask Example UI Application
+# Flask Example Services Application
 
-Example Flask UI App with REST, MySQL, Message-Broker, Docker and Kubernetes for a Microservices Architecture.
+Example Flask Services App with REST, MySQL, Docker and Kubernetes to demonstrate Service Mesh and API Gateway.
 
 ## <u>Installation</u>
 
@@ -37,13 +37,7 @@ pip install -r requirements.txt
 Start Local Server:
 
 ```bash
-python ui_interface/main.py
-```
-
-Run MQ Consumer:
-
-```bash
-python ui_interface/producer.py
+python core/main.py
 ```
 
 ---
@@ -52,8 +46,6 @@ python ui_interface/producer.py
 
 * Demo Super Heros Gallery with vote button.
   * `http://localhost:5000/`
-* RabbitMQ integration for message-broker.
-  * [CloudAMQP](https://www.cloudamqp.com/)
 * App Integrated with Docker.
 * App Integrated with Kubernetes.[Instructions](k8s/README.md)
 
