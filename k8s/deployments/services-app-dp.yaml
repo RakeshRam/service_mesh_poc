@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: services-app
+  labels:
+    app: services-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: services-app
+  template:
+    metadata:
+      labels:
+        app: services-app
+    spec:
+      containers:
+      - name: services-app
+        image: services:v1
+        command: ["python", "/src/main/core/main.py"]
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 5000

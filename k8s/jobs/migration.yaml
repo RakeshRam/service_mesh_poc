@@ -1,0 +1,40 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: flask-migrations
+spec:
+  template:
+    spec:
+      containers:
+        - name: flask
+          image: services:v1
+          command: ["/bin/sh", "-c"]
+          args:
+            - echo starting migrations Flask;
+              python manager.py db init;
+              python manager.py db migrate;
+              python manager.py db upgrade;
+          env:
+            - name: MYSQL_DATABASE
+              valueFrom: 
+                configMapKeyRef:
+                  name: mysql-services-configmap
+                  key: mysql-database
+            - name: MYSQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: mysql-root-username
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: mysql-password
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: mysql-root-password
+
+      restartPolicy: Never
+  backoffLimit: 5
