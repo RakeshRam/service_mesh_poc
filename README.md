@@ -44,7 +44,7 @@ python core/main.py
 
 ## <u>Features</u>
 
-* Demo Super Heros Gallery with vote button.
+* Demo Home page.
   * `http://localhost:5000/`
 * App Integrated with Docker.
 * App Integrated with Kubernetes.[Instructions](k8s/README.md)
