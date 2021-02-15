@@ -45,8 +45,9 @@ python core/main.py
 
 ## <u>Features</u>
 
-* Demo Home page.
-  * `http://localhost:5000/`
+* Demo Home page with REST integration.
+  * App V1: `http://localhost:5000/`
+  * App V2: `http://localhost:5001/`
 * [Gunicorn](https://gunicorn.org/)(Application Server) + [Nginx](https://www.nginx.com/)(Web Server)
 * App Integrated with Docker.
 * App Integrated with Kubernetes.[Instructions](k8s/README.md)
