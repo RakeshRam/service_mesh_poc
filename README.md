@@ -1,6 +1,6 @@
 # Flask Example Services Application
 
-Example Flask Services App with REST, MySQL, Docker and Kubernetes to demonstrate Service Mesh and API Gateway.
+Example Flask Services App with REST, MySQL, Gunicorn+Nginx, Docker and Kubernetes to demonstrate Service Mesh and API Gateway.
 
 ## <u>Installation</u>
 
@@ -11,6 +11,7 @@ From project root DIR run
 ## <u>Usage(Docker)</u>
 
 ```bash
+set COMPOSE_CONVERT_WINDOWS_PATHS=1
 docker-compose up --build
 ```
 
@@ -46,8 +47,10 @@ python core/main.py
 
 * Demo Home page.
   * `http://localhost:5000/`
+* [Gunicorn](https://gunicorn.org/)(Application Server) + [Nginx](https://www.nginx.com/)(Web Server)
 * App Integrated with Docker.
 * App Integrated with Kubernetes.[Instructions](k8s/README.md)
+* Istio Implementation.[Instructions](k8s/istio-gateway/README.md)
 
 ---
 

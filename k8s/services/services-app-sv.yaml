@@ -5,8 +5,8 @@ metadata:
 spec:
   selector:
     app: services-app
-  type: LoadBalancer  
+  type: LoadBalancer             # LoadBalancer OR ClusterIP(Default) OR NodePort
   ports:
     - protocol: TCP
-      port: 5000
-      targetPort: 5000
+      port: 5000              # External connection
+      targetPort: 5000        # Internal POD connection

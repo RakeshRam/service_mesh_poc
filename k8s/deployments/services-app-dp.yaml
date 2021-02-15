@@ -16,8 +16,8 @@ spec:
     spec:
       containers:
       - name: services-app
-        image: services:v1
-        command: ["python", "/src/main/core/main.py"]
-        imagePullPolicy: Never
+        image: rakeshram909/services:v1
+        command: ["gunicorn", "--bind", "0.0.0.0:5000", "runner:app"]
+        imagePullPolicy: Always
         ports:
         - containerPort: 5000

@@ -8,13 +8,6 @@ Flask App Deployed in a Kubernetes(minikube) cluster.
 minikube start
 ```
 
-## <>Import Docker ENV to MiniKube</>
-
-```bash
-Windows: @FOR /f "tokens=*" %i IN ('minikube -p minikube docker-env') DO @%i 
-Unix: eval $(minikube docker-env)
-```
-
 ## <u>Deploy MySQL</u>
 
 Component | Command
@@ -54,11 +47,31 @@ kubectl exec --stdin --tty <POD-NAME> -- /bin/sh
 **Get Application IP:**
 
 ```bash
-kubectl get service
+kubectl get svc
 ```
 
 Note: On local machine running minikube, run below command in seperate CMD prompt to get external ip
 
 ```bash
 minikube tunnel
+```
+
+## <u>[Ingress](https://kubernetes.io/docs/tasks/access-application-cluster/ingress-minikube/) (Not Working)</u>
+
+**Enable the Ingress controller(Minikube):**
+
+```bash
+minikube addons enable ingress
+```
+
+Component | Command
+------------ | -------------
+Ingress | kubectl apply -f k8s\ingress\ingress.yaml
+
+<br/>
+
+**Get Application IP:**
+
+```bash
+kubectl get ingress
 ```

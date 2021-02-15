@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: services-app-v2
+  labels:
+    app: services-app-v2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: services-app-v2
+  template:
+    metadata:
+      labels:
+        app: services-app-v2
+    spec:
+      containers:
+      - name: services-app-v2
+        image: rakeshram909/services:v2
+        command: ["gunicorn", "--bind", "0.0.0.0:5001", "runner:app"]
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 5001
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: services-app-service-v2
+  labels:
+    app: services-app-service-v2
+spec:
+  selector:
+    app: services-app-v2
+  type: LoadBalancer             # LoadBalancer OR ClusterIP(Default) OR NodePort
+  ports:
+    - protocol: TCP
+      port: 5001              # External connection
+      targetPort: 5001        # Internal POD connection

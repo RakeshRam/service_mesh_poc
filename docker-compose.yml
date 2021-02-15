@@ -1,27 +1,37 @@
 version: '3.8'
 services:
   backend:
-    image: services:v1
+    image: services:v2             # Name:Tag
     build:
       context: .
       dockerfile: Dockerfile
-    command: 'python /src/main/core/main.py'
-    ports:
-      - 5000:5000
+    command: 'gunicorn --bind 0.0.0.0:5000 runner:app'
+    expose:
+      - 5000                       # Expose Port 5000 Externally
     volumes:
-      - .:/src/main
+      - .:/src/main                # Map current base DIR to DIR inside container
+    env_file:
+      - ./.env.dev                 # Environment Variable
     depends_on:
       - db
 
   db:
     image: mysql:5.7.22
-    restart: always
+    restart: always                # Restart Container
     environment:
       MYSQL_DATABASE: main
       MYSQL_USER: root
       MYSQL_PASSWORD: root
       MYSQL_ROOT_PASSWORD: root
+      COMPOSE_CONVERT_WINDOWS_PATHS: 1
     volumes:
-      - .dbdata:/var/lib/mysql
+      - .dbdata:/var/lib/mysql     # Persistent Storage
     ports:
       - 33067:3306
+
+  nginx:
+    build: ./web_server/nginx      # Nginx DOckerFile and Config
+    ports:
+      - 80:80                      # External Port: Internal Nginx Port
+    depends_on:
+      - backend

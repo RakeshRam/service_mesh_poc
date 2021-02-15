@@ -7,7 +7,7 @@ spec:
     spec:
       containers:
         - name: flask
-          image: services:v1
+          image: rakeshram909/services:v1
           command: ["/bin/sh", "-c"]
           args:
             - echo starting migrations Flask;
