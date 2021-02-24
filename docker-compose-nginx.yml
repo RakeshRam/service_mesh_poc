@@ -1,7 +1,7 @@
 version: '3.8'
 services:
-  backend:
-    image: services:v2             # Name:Tag
+  backend_v1:
+    image: services:v1             # Name:Tag
     build:
       context: .
       dockerfile: Dockerfile
@@ -11,7 +11,22 @@ services:
     volumes:
       - .:/src/main                # Map current base DIR to DIR inside container
     env_file:
-      - ./.env.dev                 # Environment Variable
+      - ./.env.dev.v1                 # Environment Variable
+    depends_on:
+      - db
+
+  backend_v2:
+    image: services:v2             # Name:Tag
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: 'gunicorn --bind 0.0.0.0:5001 runner:app'
+    expose:
+      - 5001                       # Expose Port 5001 Externally
+    volumes:
+      - .:/src/main                # Map current base DIR to DIR inside container
+    env_file:
+      - ./.env.dev.v2                 # Environment Variable
     depends_on:
       - db
 
@@ -30,8 +45,9 @@ services:
       - 33067:3306
 
   nginx:
-    build: ./web_server/nginx      # Nginx DockerFile and Config - Web Server
+    build: ./web_server/nginx-gateway      # Nginx DockerFile and Config API-Gateway
     ports:
       - 80:80                      # External Port: Internal Nginx Port
     depends_on:
-      - backend
+      - backend_v1
+      - backend_v2

@@ -1,3 +1,5 @@
+import os
+
 from flask import Flask, request, render_template, jsonify, abort
 from flask_cors import CORS
 
@@ -16,7 +18,7 @@ db.init_app(app)
 
 @app.route('/')
 def index():
-    return render_template('main.html', books=Books.query.all())
+    return render_template('main.html', books=Books.query.all(), version=os.environ.get('VER'))
 
 @app.route('/book/add_book/', methods=['POST'])
 def add_book():
@@ -39,12 +41,13 @@ def add_book():
         abort(400, str(e))
 
     return jsonify({
-        'message': 'success'
+        'message': 'success',
+        'version': os.environ.get('VER')
     })
 
 @app.route('/book/edit_book/<int:id>/', methods=['PUT', 'DELETE'])
 def edit_book(id):
-
+    request_action = 'Update'
     # Update Book
     if request.method == 'PUT':
         content = request.get_json(silent=True)
@@ -56,6 +59,7 @@ def edit_book(id):
 
     # Delete Book
     elif request.method == 'DELETE':
+        request_action = 'Delete'
         try:
             book = Books.query.get(id)
             db.session.delete(book)
@@ -64,7 +68,8 @@ def edit_book(id):
             abort(400, str(e))
         
     return jsonify({
-        'message': 'success'
+        'message': f'{request_action} success',
+        'version': os.environ.get('VER')
     })
 
 if __name__ == '__main__':

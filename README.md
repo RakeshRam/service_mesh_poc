@@ -11,34 +11,7 @@ From project root DIR run
 ## <u>Usage(Docker)</u>
 
 ```bash
-set COMPOSE_CONVERT_WINDOWS_PATHS=1
 docker-compose up --build
-```
-
----
-
-## <u>DB SetUp</u>
-
-```bash
-python manager.py db init
-python manager.py db migrate
-python manager.py db upgrade
-```
-
----
-
-## <u>Usage(Manual)</u>
-
-Set-up Local Environment:
-
-```bash
-pip install -r requirements.txt
-```
-
-Start Local Server:
-
-```bash
-python core/main.py
 ```
 
 ---

@@ -24,10 +24,19 @@ istioctl proxy-status
 ## <u>Inject Istio to Pods</u>
 
 ```bash
-kubectl label namespace/default istio-injection=enabled
+kubectl label namespace default istio-injection=enabled
 # Restart all pods to get sidecar injected
 kubectl delete pods --all
 ```
+
+## <u>Istio Gateway & VirtualService</u>
+
+**Deploy V2 application and enable VirtualService**
+
+Component | Command
+------------ | -------------
+Gateway | kubectl apply -f k8s\istio-gateway\gateway.yaml
+VirtualService | kubectl apply -f k8s\istio-gateway\services-vs.yaml
 
 ## <u>Traffic Splits</u>
 

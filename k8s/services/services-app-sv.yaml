@@ -5,7 +5,7 @@ metadata:
 spec:
   selector:
     app: services-app
-  type: LoadBalancer             # LoadBalancer OR ClusterIP(Default) OR NodePort
+  type: NodePort             # LoadBalancer OR ClusterIP(Default) OR NodePort
   ports:
     - protocol: TCP
       port: 5000              # External connection
