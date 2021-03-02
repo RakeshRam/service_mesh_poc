@@ -29,14 +29,39 @@ kubectl label namespace default istio-injection=enabled
 kubectl delete pods --all
 ```
 
-## <u>Istio Gateway & VirtualService</u>
+---
 
-**Deploy V2 application and enable VirtualService**
+## <u>Istio Addons</u>
+
+```bash
+kubectl apply -f /path/to/istio/folder(EX: istio-1.9.0)/samples/addons/
+kubectl get svc -n istio-system
+```
+
+Addon  | Description
+------------ | -------------
+Prometheus | Monitoring System
+Kiali |  Observability Dashboard for Istio
+Grafana | Observability Dashboard for Istio
+Tracing | Reporting of trace spans for workload-to-workload communications within a mesh
+Jaeger | End to End distributed tracing system
+
+</br>
+
+## <u>Istio Gateway & VirtualService</u>
 
 Component | Command
 ------------ | -------------
 Gateway | kubectl apply -f k8s\istio-gateway\gateway.yaml
-VirtualService | kubectl apply -f k8s\istio-gateway\services-vs.yaml
+
+**Enable ExternalIP to Istio Ingress:**
+
+```bash
+kubectl get svc -n istio-system -l app=istio-ingressgateway
+minikube tunnel -c
+```
+
+---
 
 ## <u>Traffic Splits</u>
 
@@ -44,5 +69,10 @@ VirtualService | kubectl apply -f k8s\istio-gateway\services-vs.yaml
 
 Component | Command
 ------------ | -------------
-Deployment & Service | kubectl apply -f k8s\deployments\services-app-dp-v2.yaml
-VirtualService | kubectl apply -f k8s\istio-gateway\services-vs.yaml
+VirtualService | k8s/istio-gateway/traffic-splits/ts.yaml
+
+---
+
+## <u>Canary Deployment - TODO</u>
+
+---

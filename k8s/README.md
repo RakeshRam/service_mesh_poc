@@ -5,7 +5,7 @@ Flask App Deployed in a Kubernetes(minikube) cluster.
 ## <u>Using Minikube(Local SetUp)</u>
 
 ```bash
-minikube start
+minikube start --cpus 6 --memory 8192
 ```
 
 ## <u>Deploy MySQL</u>
@@ -33,8 +33,18 @@ kubectl run -it --rm --image=mysql:5.7.22 --restart=Never mysql-client -- mysql 
 Component | Command
 ------------ | -------------
 Service | kubectl apply -f k8s\services\services-app-sv.yaml
-Deployment | kubectl apply -f k8s\deployments\services-app-dp.yaml
+Deployment V1 | kubectl apply -f k8s\deployments\services-app-dp.yaml
+Deployment V2 | kubectl apply -f k8s/deployments/services-app-dp-v2.yaml
 Default Migrations | kubectl apply -f k8s\jobs\migration.yaml
+
+---
+
+**Test Application inside Cluster(POD):**
+
+Service | Port-Fowart | URL
+------------ | ------------- | -------------
+Deployment V1 | kubectl  port-forward svc/services-app-service -n default 5000 | http://localhost:5000/
+Deployment V2 | kubectl  port-forward svc/services-app-service-v2 -n default 5001 | http://localhost:5001/
 
 <br/>
 
@@ -56,7 +66,7 @@ Note: On local machine running minikube, run below command in seperate CMD promp
 minikube tunnel
 ```
 
-## <u>[Ingress](https://kubernetes.io/docs/tasks/access-application-cluster/ingress-minikube/) (Not Working)</u>
+## <u>[Ingress](https://kubernetes.io/docs/tasks/access-application-cluster/ingress-minikube/)</u>
 
 **Enable the Ingress controller(Minikube):**
 

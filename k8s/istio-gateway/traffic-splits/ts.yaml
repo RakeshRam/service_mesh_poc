@@ -4,12 +4,14 @@ metadata:
   name: services-vs
 spec:
   hosts:
-  - "*"
+  - "*" # mydemo.info
   gateways:
   - services-gateway
   http:
   - route:
     - destination:
         host: services-app-service
-        port:
-          number: 5000
+      weight: 50
+    - destination:
+        host: services-app-service-v2
+      weight: 50
