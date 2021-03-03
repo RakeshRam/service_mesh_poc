@@ -73,6 +73,10 @@ VirtualService | k8s/istio-gateway/traffic-splits/ts.yaml
 
 ---
 
-## <u>Canary Deployment - TODO</u>
+## <u>Canary Deployment</u>
+
+Component | Command
+------------ | -------------
+VirtualService | k8s/istio-gateway/canary/cn.yaml
 
 ---
