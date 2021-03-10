@@ -85,3 +85,34 @@ Ingress | kubectl apply -f k8s\ingress\ingress.yaml
 ```bash
 kubectl get ingress
 ```
+
+---
+
+## <u>Auto-Scaling</u>
+
+**Horizontal POD Autoscale(HPA)**
+
+Enable metrics-server addon in minikube.
+
+```bash
+minikube addons enable metrics-server
+```
+
+**Set AutoScale Condition**
+
+```bash
+kubectl autoscale deployment services-app --cpu-percent=80 --min=1 --max=10
+```
+
+**Check HPA Metrics**
+
+```bash
+kubectl get hpa
+```
+
+**Get Node and Pod Metrics**
+
+```bash
+kubectl top nodes
+kubectl top pods
+```
