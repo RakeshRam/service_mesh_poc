@@ -24,7 +24,7 @@ docker-compose up --build
 * [Gunicorn](https://gunicorn.org/)(Application Server) + [Nginx](https://www.nginx.com/)(Web Server)
 * App Integrated with Docker.
 * App Integrated with Kubernetes.[Instructions](k8s/README.md)
-* Istio Implementation.[Instructions](k8s/istio-gateway/README.md)
+* Istio Implementation.[Instructions](k8s/istio/README.md)
 
 ---
 
