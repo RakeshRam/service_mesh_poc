@@ -80,3 +80,11 @@ Component | Command
 VirtualService | k8s/istio-gateway/canary/cn.yaml
 
 ---
+
+## <u>Auto-Retry</u>
+
+Component | Command
+------------ | -------------
+VirtualService | k8s/istio-gateway/retry/rt.yaml
+
+---
