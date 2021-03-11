@@ -11,6 +11,7 @@ spec:
   - route:
     - destination:
         host: services-app-service-v3
+    timeout: 8s            # Circuit Breaker
     retries:
-      attempts: 10
-      perTryTimeout: 2s
+      attempts: 5          # Attempt 5 times
+      perTryTimeout: 3s    # Attempt is marked as failed if it takes longer than 3 seconds
