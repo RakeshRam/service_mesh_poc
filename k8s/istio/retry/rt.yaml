@@ -12,6 +12,7 @@ spec:
     - destination:
         host: services-app-service-v3
     timeout: 8s            # Circuit Breaker
-    retries:
+    retries:               # https://istio.io/latest/docs/reference/config/networking/virtual-service/#HTTPRetry
       attempts: 5          # Attempt 5 times
       perTryTimeout: 3s    # Attempt is marked as failed if it takes longer than 3 seconds
+      retryOn: 5xx         # https://www.envoyproxy.io/docs/envoy/latest/configuration/http/http_filters/router_filter#x-envoy-retry-on
