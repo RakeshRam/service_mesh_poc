@@ -1,4 +1,5 @@
 import os
+import random
 
 from flask import Flask, request, render_template, jsonify, abort
 from flask_cors import CORS
@@ -18,6 +19,13 @@ db.init_app(app)
 
 @app.route('/')
 def index():
+    # To Stimulate 500 Internal server error.
+    enable_retry = os.environ.get('RT')
+    if enable_retry == "Y":
+        c = random.choice((0,1))
+        if c == 1:
+            abort(500, 'Internal Server Error To Test Istio Retry Logic')
+
     return render_template('main.html', books=Books.query.all(), version=os.environ.get('VER'))
 
 @app.route('/book/add_book/', methods=['POST'])

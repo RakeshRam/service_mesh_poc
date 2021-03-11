@@ -5,10 +5,12 @@ metadata:
 spec:
   hosts:
   - mydemo.info
+  gateways:
+  - services-gateway
   http:
   - route:
     - destination:
-        host: services-app-service
+        host: services-app-service-v3
     retries:
       attempts: 10
       perTryTimeout: 2s

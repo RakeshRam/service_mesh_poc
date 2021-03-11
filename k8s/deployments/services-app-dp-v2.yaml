@@ -31,8 +31,9 @@ metadata:
 spec:
   selector:
     app: services-app-v2
-  type: LoadBalancer             # LoadBalancer OR ClusterIP(Default) OR NodePort
+  type: ClusterIP             # LoadBalancer OR ClusterIP(Default) OR NodePort
   ports:
     - protocol: TCP
       port: 5001              # External connection
       targetPort: 5001        # Internal POD connection
+      name: http-app

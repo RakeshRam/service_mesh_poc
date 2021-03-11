@@ -1,7 +1,7 @@
 version: '3.8'
 services:
   backend:
-    image: services:v2             # Name:Tag
+    image: services:v3             # Name:Tag
     build:
       context: .
       dockerfile: Dockerfile

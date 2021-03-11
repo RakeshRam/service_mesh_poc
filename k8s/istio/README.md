@@ -85,6 +85,7 @@ VirtualService | k8s/istio-gateway/canary/cn.yaml
 
 Component | Command
 ------------ | -------------
+Deployment V3 | kubectl apply -f k8s\deployments\services-app-dp-v3.yaml
 VirtualService | k8s/istio-gateway/retry/rt.yaml
 
 ---
