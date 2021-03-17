@@ -1,7 +1,7 @@
 version: '3.8'
 services:
   backend:
-    image: services:v3             # Name:Tag
+    image: services:v1             # Name:Tag
     build:
       context: .
       dockerfile: Dockerfile
@@ -11,7 +11,7 @@ services:
     volumes:
       - .:/src/main                # Map current base DIR to DIR inside container
     env_file:
-      - ./.env.dev                 # Environment Variable
+      - ./.env.dev.v1                 # Environment Variable
     depends_on:
       - db
 
