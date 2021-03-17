@@ -21,6 +21,11 @@ spec:
         imagePullPolicy: Always
         ports:
         - containerPort: 5000
+        env:
+        - name: VER
+          value: "V1"
+        - name: RT
+          value: "N"
         resources:
           limits:
             memory: "100Mi"
