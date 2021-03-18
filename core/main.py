@@ -2,6 +2,7 @@ import os
 import sys
 import random
 import logging
+import requests
 
 from flask import Flask, request, render_template, jsonify, abort
 from flask_cors import CORS
@@ -44,19 +45,26 @@ def index():
     logger.debug(f'App Version: {os.environ.get("VER")}')
     return render_template('main.html', books=Books.query.all(), version=os.environ.get('VER'))
 
-@app.route('/get_records', methods=['GET'])
-def get_records():
-    if os.environ.get('VER') == 'V1':
-        logger.warn("get_records Not available in V1 redirect to V2+")
-        logger.critical('404 RESOURCE NOT FOUND')
-        abort(404, 'Page Not Found')
+@app.route('/get_userinfo', methods=['GET'])
+def get_userinfo():
+    logger.info("Demo view to test GET API from email service")
+    try:
+        data = requests.get('/email_svc/get_emails').json()
+    except Exception as e:
+        logger.critical(f'Error: {str(e)}')
+        data = []
 
-    logger.info("Demo view to test GET API")
-    data = [
-        {'id':1, 'name': 'N', 'author': 'ABC', 'publisher': "XYZ", 'is_available': True},
-        {'id':2, 'name': 'N', 'author': 'ABC', 'publisher': "XYZ", 'is_available': True},
-        {'id':3, 'name': 'N', 'author': 'ABC', 'publisher': "XYZ", 'is_available': True}
-    ]
+    logger.debug(f'Total Records: {len(data)}')
+    return jsonify({'result': data, "status": 200})
+
+@app.route('/get_search', methods=['GET'])
+def get_search():
+    logger.info("Demo view to test GET API from search service")
+    try:
+        data = requests.get('/search_svc/search').json()
+    except Exception as e:
+        logger.critical(f'Error: {str(e)}')
+        data = []
 
     logger.debug(f'Total Records: {len(data)}')
     return jsonify({'result': data, "status": 200})

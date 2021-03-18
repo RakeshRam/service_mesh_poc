@@ -1,0 +1,12 @@
+version: '3.8'
+services:
+  backend:
+    image: contactus:v1             # Name:Tag
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: 'gunicorn --bind 0.0.0.0:5000 runner:app'
+    ports:
+      - 5000:5000                       # Expose Port 5000 Externally
+    volumes:
+      - .:/src/main                # Map current base DIR to DIR inside container
