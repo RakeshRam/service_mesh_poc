@@ -37,3 +37,20 @@ spec:
       port: 5000              # External connection
       targetPort: 5000        # Internal POD connection
       name: http-app
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: contactus-vs
+spec:
+  hosts:
+  - mydemo.info
+  gateways:
+  - services-gateway
+  http:
+  - match:
+    - uri:
+        prefix: /contact
+    route:
+    - destination:
+        host: contactus-app-svc-v1           # Contact us Service

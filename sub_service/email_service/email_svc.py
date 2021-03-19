@@ -3,14 +3,13 @@ import sys
 import random
 import logging
 
-from flask import Flask, request, render_template, jsonify, abort
+from flask import Flask, request, render_template, jsonify, abort, Blueprint
 from flask_cors import CORS
 
-app = Flask(__name__, instance_relative_config=True)
+bp = Blueprint("email_svc", __name__)
+CORS(bp)
 
-CORS(app)
-
-logger = logging.getLogger(f'App Name: Email Service - {os.environ.get("VER")}')
+logger = logging.getLogger(f'App Name: Email Service - V1')
 logger.setLevel(logging.DEBUG)
 
 handler = logging.StreamHandler(sys.stdout)
@@ -19,7 +18,7 @@ formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(messag
 handler.setFormatter(formatter)
 logger.addHandler(handler)
 
-@app.route('/test')
+@bp.route('/test')
 def index():
     # To test Email Service status.
     logger.info("Demo view to test Email Service")
@@ -27,7 +26,7 @@ def index():
 
     return jsonify({'result': "UP", "status": 200})
 
-@app.route('/send_email', methods=['POST'])
+@bp.route('/send_email', methods=['POST'])
 def send_email():
     logger.info("Demo view to test Email Notification Status")
     user_id = request.get_json(silent=True)
@@ -39,7 +38,7 @@ def send_email():
     logger.debug(f'Email Notification Status: {email_status}')
     return jsonify({'result': email_status, "status": 200})
 
-@app.route('/get_emails', methods=['GET'])
+@bp.route('/get_emails', methods=['GET'])
 def get_emails():
     logger.info("Demo view to get email address of users")
     data = [
@@ -51,6 +50,7 @@ def get_emails():
     logger.debug(f'Total Records: {len(data)}')
     return jsonify({'result': data, "status": 200})
 
-
+app = Flask(__name__)
+app.register_blueprint(bp, url_prefix='/email_svc')  # Prefix email_svc
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')

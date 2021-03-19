@@ -1,14 +1,11 @@
-import os
 import sys
-import random
 import logging
 
-from flask import Flask, request, render_template, jsonify, abort
+from flask import Flask, jsonify, Blueprint
 from flask_cors import CORS
 
-app = Flask(__name__, instance_relative_config=True)
-
-CORS(app)
+bp = Blueprint("Search_svc", __name__)
+CORS(bp)
 
 logger = logging.getLogger(f'App Name: Search Service - V1')
 logger.setLevel(logging.DEBUG)
@@ -19,7 +16,7 @@ formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(messag
 handler.setFormatter(formatter)
 logger.addHandler(handler)
 
-@app.route('/search')
+@bp.route('/search')
 def search():
     # To test Search Service status.
     logger.info("Demo view to test Search Service")
@@ -32,6 +29,7 @@ def search():
     logger.debug(f'Total Records: {len(data)}')
     return jsonify({'result': data, "status": 200})
 
-
+app = Flask(__name__)
+app.register_blueprint(bp, url_prefix='/search_svc')  # Prefix search_svc
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')

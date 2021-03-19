@@ -1,17 +1,17 @@
 version: '3.8'
 services:
   backend:
-    image: services:v1             # Name:Tag
+    image: services:v2             # Name:Tag
     build:
       context: .
       dockerfile: Dockerfile
-    command: 'gunicorn --bind 0.0.0.0:5000 runner:app'
+    command: 'gunicorn --bind 0.0.0.0:5001 runner:app'
     expose:
-      - 5000                       # Expose Port 5000 Externally
+      - 5001                       # Expose Port 5000 Externally
     volumes:
       - .:/src/main                # Map current base DIR to DIR inside container
     env_file:
-      - ./.env.dev.v1                 # Environment Variable
+      - ./.env.dev.v2                 # Environment Variable
     depends_on:
       - db
 

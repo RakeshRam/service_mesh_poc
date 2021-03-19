@@ -37,3 +37,20 @@ spec:
       port: 5000              # External connection
       targetPort: 5000        # Internal POD connection
       name: http-app
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: email-vs
+spec:
+  hosts:
+  - mydemo.info
+  gateways:
+  - services-gateway
+  http:
+  - match:
+    - uri:
+        prefix: /email_svc               # Prefix URL
+    route:
+    - destination:
+        host: email-app-svc-v1           # Email Service

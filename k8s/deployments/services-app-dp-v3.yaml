@@ -26,6 +26,14 @@ spec:
           value: "V3"
         - name: RT
           value: "Y"
+        - name: search_svc
+          value: "search-app-svc-v1"
+        - name: search_svc_port
+          value: "5000"
+        - name: email_svc
+          value: "email-app-svc-v1"
+        - name: email_svc_port
+          value: "5000"
 ---
 apiVersion: v1
 kind: Service

@@ -49,7 +49,9 @@ def index():
 def get_userinfo():
     logger.info("Demo view to test GET API from email service")
     try:
-        data = requests.get('/email_svc/get_emails').json()
+        email_svc = f'http://{os.environ.get("email_svc")}:{os.environ.get("email_svc_port")}/email_svc/get_emails'
+        logger.debug(f"EMAIL SVC: {email_svc}")
+        data = requests.get(email_svc).json()
     except Exception as e:
         logger.critical(f'Error: {str(e)}')
         data = []
@@ -61,7 +63,9 @@ def get_userinfo():
 def get_search():
     logger.info("Demo view to test GET API from search service")
     try:
-        data = requests.get('/search_svc/search').json()
+        search_svc = f'http://{os.environ.get("search_svc")}:{os.environ.get("search_svc_port")}/search_svc/search'
+        logger.debug(f"SEARCH SVC: {search_svc}")
+        data = requests.get(search_svc).json()
     except Exception as e:
         logger.critical(f'Error: {str(e)}')
         data = []
