@@ -1,0 +1,27 @@
+apiVersion: "security.istio.io/v1beta1"
+kind: "RequestAuthentication"
+metadata:
+  name: "jwt-auth"
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: email-app-v1
+  jwtRules:
+  - issuer: "admin@secure.com"
+    jwksUri: "https://raw.githubusercontent.com/auth_svc/validate_tkn"
+---
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: require-jwt
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: email-app-v1
+  action: ALLOW
+  rules:
+  - from:
+    - source:
+       requestPrincipals: ["admin@secure.com/admin@secure.com"]

@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth-app-a1
+  labels:
+    app: auth-app-a1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auth-app-a1
+  template:
+    metadata:
+      labels:
+        app: auth-app-a1
+    spec:
+      containers:
+      - name: auth-app-a1
+        image: rakeshram909/auth_svc:a1
+        command: ["gunicorn", "--bind", "0.0.0.0:5000", "runner:app"]
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 5000
+---
+apiVersion: a1
+kind: Service
+metadata:
+  name: auth-app-svc-a1
+  labels:
+    app: auth-app-svc-a1
+spec:
+  selector:
+    app: auth-app-a1
+  type: LoadBalancer             # LoadBalancer OR ClusterIP(Default) OR NodePort
+  ports:
+    - protocol: TCP
+      port: 5000              # External connection
+      targetPort: 5000        # Internal POD connection
+      name: http-app
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: auth-vs
+spec:
+  hosts:
+  - mydemo.info
+  gateways:
+  - services-gateway
+  http:
+  - match:
+    - uri:
+        prefix: /auth_svc               # URL Prefix
+    route:
+    - destination:
+        host: auth-app-svc-a1           # Auth Service
